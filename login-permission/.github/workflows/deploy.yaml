@@ -1,0 +1,64 @@
+# 将静态内容部署到 GitHub Pages 的简易工作流程
+name: Build and Deploy # 工作流名称 如省略使用当前文件名
+run-name: Deploy by @${{ github.actor }} - ${{ github.event.head_commit.message }} # 工作流运行时的名称 作者 如省略显示提交时的commit信息
+
+on:
+  # 监听push动作,仅在推送到默认分支时运行。
+  push:
+    branches: ['main']
+    paths-ignore:   # 下列文件的变更不触发部署，可以自行添加
+      - README.md
+
+  # 这个选项可以使你手动在 Action tab 页面触发工作流
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages。
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 允许一个并发的部署
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  # 定义一个名为 deploy 的工作流
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout  # clone该仓库源码到工作流中
+      uses: actions/checkout@v4
+
+    - name: Set up Node  # 设置node环境,指定node版本为20,并缓存npm包提升后续执行速度
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+      # 缓存 npm node_modules
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-cache-
+
+      # 安装依赖 npm
+    - name: Install dependencies
+      # 如果没有命中缓存才执行 npm install
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      run: npm install
+
+    - name: Build With Vite
+      run: npm run build
+
+    # 部署到 GitHub pages
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3 # 使用部署到 GitHub pages 的 action
+      with:
+        publish_dir: dist # 部署打包后的 build 目录
+        github_token: ${{ secrets.ACCESS_TOKEN }} # secret 名
