@@ -670,6 +670,3 @@ function tryWatingRequest() {
   }
 }
 ```
-
-
-
