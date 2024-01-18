@@ -10,6 +10,7 @@ interface DataType {
 }
 
 const Role: React.FC = () => {
+  console.log(Table);
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -71,8 +72,8 @@ const Role: React.FC = () => {
       key: 'des'
     },
     {
-      title: '操作',
-      key: 'action',
+      title: '实例状态',
+      key: 'status',
       render: (_, record) => (
         <Space size="middle">
           <a>删除</a>

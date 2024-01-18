@@ -3,7 +3,6 @@ import { lazy } from 'react';
 import { VideoCameraOutlined } from '@ant-design/icons';
 
 const Main = LazyLoading(lazy(() => import('@/pages/main')));
-const AuthDemo = LazyLoading(lazy(() => import('@/pages/authDemo')));
 const User = LazyLoading(lazy(() => import('@/pages/user')));
 const Role = LazyLoading(lazy(() => import('@/pages/role')));
 
@@ -18,17 +17,6 @@ const routeMenuMap = [
         icon: <VideoCameraOutlined />,
         path: '/main',
         element: Main
-      },
-      {
-        name: '二级菜单',
-        icon: <VideoCameraOutlined />,
-        menuItems: [
-          {
-            name: '组件级权限示例',
-            path: '/authDemo',
-            element: AuthDemo
-          }
-        ]
       }
     ]
   },
