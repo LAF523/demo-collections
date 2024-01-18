@@ -1,31 +1,45 @@
 const admin = [
-  "SHOW1",
-  "CHANGE1",
-  "SHOW2",
-  "CHANGE2",
-  "SHOW3",
-  "CHANGE3",
-  "SHOW4",
-  "CHANGE4",
-  "SHOW5",
-  "CHANGE5",
-  "SHOW6",
-  "CHANGE6",
-  "SHOW7",
-  "CHANGE7",
-  "SHOW8",
-  "CHANGE8",
-  "SHOW9",
-  "CHANGE9",
-  "SHOW10",
-  "CHANGE10",
+  "SHOW_USER",
+  "MANAGE_USER",
+  "SHOW_ROLE",
+  "MANAGE_ROLE",
 ]
 const user = [
-  "SHOW1",
-  "CHANGE1"
+  "SHOW_USER",
+  "SHOW_ROLE",
+]
+const all = [
+  {
+    name: "SHOW_USER",
+    des: "SHOW_USER",
+    key: "SHOW_USER",
+  },
+  {
+    name: "MANAGE_USER",
+    des: "MANAGE_USER",
+    key: "MANAGE_USER"
+  },
+  {
+    name: "SHOW_ROLE",
+    des: 'SHOW_ROLE',
+    key: 'SHOW_ROLE'
+  },{
+    name: "MANAGE_ROLE",
+    des: "MANAGE_ROLE",
+    key: "MANAGE_ROLE"
+  },{
+    name: 'SHOW_MAIN',
+    des: 'SHOW_MAIN',
+    key: 'SHOW_MAIN'
+  },{
+    name: "MANAGE_MAIN",
+    des: 'MANAGE_MAIN',
+    key: 'MANAGE_MAIN'
+  }
 ]
 
 module.exports = {
   admin,
-  user
+  user,
+  all
 }

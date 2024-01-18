@@ -4,7 +4,7 @@ const secret = getPrivateKeyPem(); // 你的密钥
 
 // 设置token过期时间
 const options = {
-  expiresIn: '10s', // 可以是数字（单位为秒）或字符串（如 '2 hours'、'1d' 等）
+  expiresIn: '10m', // 可以是数字（单位为秒）或字符串（如 '2 hours'、'1d' 等）
   algorithm: 'RS256' // 使用RAS非对称加密进行签名
 };
 // 无感刷新token所以来的token
@@ -26,8 +26,9 @@ function generateReFreshToken(user) {
 
 // 一个中间件,校验token时间
 function authenticateToken(req, res, next) {
-  if(req.url === '/login'){ // 登录不校验token
-    next()
+  console.log("req.url:",req.url);
+  if(['/publicKey','/login'].includes(req.url)){ // 登录不校验token
+    return next()
   }
   const authHeader = req.headers['authorization'];
   if (authHeader) {
