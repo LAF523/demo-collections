@@ -1,6 +1,14 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import styles from './index.module.less';
+import { useEffect } from 'react';
+import { isLogin } from '@/common';
 const LoginLayout: React.FC = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isLogin()) {
+      navigate('/main');
+    }
+  });
   return (
     <>
       <div className={styles.wrap}>

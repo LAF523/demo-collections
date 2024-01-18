@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { netWorkErrMap, authErrMap } from './config.ts';
-import { getTokenByLocal, getRefreshTokenByLocal } from '@/common/keyAndToken.ts';
+import { getTokenByLocal, getRefreshTokenByLocal } from '@/common/locallstorage.ts';
 
 // 添加token
 export const handleRequestHeader = (config: InternalAxiosRequestConfig<any>, otherConfig: object) => {

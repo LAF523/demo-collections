@@ -1,46 +1,27 @@
 import React, { useState } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined
-} from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
-
+import routes from '@/routes/menuRoutes';
+import usePernissionMenu from '@/hooks/usePernissionMenu';
+import logout from '@/common/logout';
+import RouterBeforeEach from '@/components/routerBeforeEach';
 const { Header, Sider, Content } = Layout;
-const menuItems = [
-  {
-    key: '/login',
-    icon: <UserOutlined />,
-    label: 'nav 1'
-  },
-  {
-    key: '/main',
-    icon: <VideoCameraOutlined />,
-    label: 'nav 2'
-  },
-  {
-    key: '3',
-    icon: <UploadOutlined />,
-    label: 'nav 3'
-  }
-];
 
-const App: React.FC = () => {
+const Baselayout: React.FC = () => {
+  console.log('baseLayout');
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
-
+  const menu = usePernissionMenu(routes);
   const menuClick = ({ key }: { key: string }) => {
     navigate(key);
   };
 
   return (
-    <Layout>
+    <Layout style={{ height: '100%' }}>
       <Sider
         trigger={null}
         collapsible
@@ -50,8 +31,8 @@ const App: React.FC = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['1']}
-          items={menuItems}
+          defaultSelectedKeys={['主页']}
+          items={menu}
           onClick={menuClick}
         />
       </Sider>
@@ -67,6 +48,7 @@ const App: React.FC = () => {
               height: 64
             }}
           />
+          <Button onClick={logout}>登出</Button>
         </Header>
         <Content
           style={{
@@ -77,11 +59,11 @@ const App: React.FC = () => {
             borderRadius: borderRadiusLG
           }}
         >
-          <Outlet />
+          <Outlet></Outlet>
         </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default App;
+export default RouterBeforeEach(Baselayout);

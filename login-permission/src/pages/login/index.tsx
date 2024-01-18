@@ -2,8 +2,11 @@ import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { login, queryUser } from '@/service/login';
 import { useNavigate } from 'react-router-dom';
-import { setTokenInLocal, setRefreshTokenInLocal } from '@/common/keyAndToken';
+import { setTokenInLocal, setRefreshTokenInLocal, setRoleInLocal } from '@/common/locallstorage';
 import { encryptParam } from '@/common/encrypt.ts';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '@/stores/user';
+
 type FieldType = {
   username?: string;
   password?: string;
@@ -16,11 +19,17 @@ const onFinishFailed = (errorInfo: any) => {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const queryUserInfo = async () => {
     const [data, err] = await queryUser();
     if (err || !data) return;
-    console.log(data);
+    setRoleInLocal(data.authority);
+    dispatch(
+      setUserInfo({
+        role: data.authority
+      })
+    );
   };
 
   const onFinish = async (values: any) => {
@@ -30,7 +39,7 @@ const Login: React.FC = () => {
     setTokenInLocal(data.token);
     setRefreshTokenInLocal(data.refreshToken);
     localStorage.setItem('user', values.username);
-    queryUserInfo();
+    await queryUserInfo();
     navigate('/main');
   };
 

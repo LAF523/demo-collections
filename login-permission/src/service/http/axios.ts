@@ -47,7 +47,7 @@ service.interceptors.response.use(
 export default service;
 
 import { getRefreshToken } from '../login.ts';
-import { setRefreshTokenInLocal, setTokenInLocal } from '@/common/keyAndToken.ts';
+import { setRefreshTokenInLocal, setTokenInLocal } from '@/common/locallstorage.ts';
 
 // 无感刷新token
 async function silentTokenRefresh(err: any) {
