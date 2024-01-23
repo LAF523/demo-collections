@@ -64,7 +64,6 @@ const useAsync = <T>(initState?: Partial<State<T>>, initConfig?: Partial<Default
       return;
     }
 
-    // setRetryFn(() => () => run(runConfig.retry(), runConfig));
     setRetryFn(() => () => {
       if (runConfig?.retry) {
         run(runConfig.retry(), runConfig);
@@ -91,14 +90,12 @@ const useAsync = <T>(initState?: Partial<State<T>>, initConfig?: Partial<Default
   return {
     error: state.status === 'error',
     success: state.status === 'success',
-    loading: state.status === 'loading', // 注意拼写错误，应该是 loading
+    loading: state.status === 'loading',
     run,
     retry,
     setData,
     setError,
-    data: state.data,
-    err: state.err,
-    status: state.status
+    ...state
   };
 };
 
