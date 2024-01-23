@@ -1,6 +1,4 @@
-import routes from '@/routes';
-
 export default () => {
   localStorage.clear();
-  routes.navigate('/login');
+  window.location.href = 'http://localhost:8080/react-template/#/login';
 };

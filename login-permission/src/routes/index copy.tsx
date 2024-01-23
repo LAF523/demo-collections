@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, createHashRouter } from 'react-router-dom';
 import routes, { getRoutes } from './menuRoutes';
 import LazyLoading from '@/components/lazyLoading';
 import { lazy } from 'react';
@@ -8,6 +8,16 @@ const LoginLayout = LazyLoading(lazy(() => import('@/layouts/loginLayout')));
 const Login = LazyLoading(lazy(() => import('@/pages/login')));
 
 const baseRoutes = [
+  {
+    path: '/',
+    element: LoginLayout,
+    children: [
+      {
+        path: '/login',
+        element: Login
+      }
+    ]
+  },
   {
     path: '/',
     element: BaseLayout,
@@ -20,4 +30,4 @@ const baseRoutes = [
     ]
   }
 ];
-export default baseRoutes;
+export default createHashRouter(baseRoutes);

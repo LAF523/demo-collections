@@ -14,6 +14,7 @@ const RouterBeforeEach = <P extends object>(Comp: React.FC<P>) => {
   const Component = (props: P & RouterBeforeEachProps) => {
     const { children, ...rest } = props;
     const location = useLocation();
+
     useEffect(() => {
       if (!isLogin()) {
         logout();

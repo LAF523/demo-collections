@@ -2,6 +2,7 @@ import { checkPermission } from '@/common/pernission';
 import { rootStore } from '@/stores';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { createHashRouter } from 'react-router-dom';
 
 /**
  * @message: 根据路由和权限生成符合权限的路由
@@ -23,12 +24,12 @@ function checkRoutes(role: string[], routers: any) {
     return acc;
   }, []);
 }
-const usePernissionRouter = routers => {
+const usePernissionRouter = baseRoutes => {
   const user = useSelector((state: rootStore) => state.user);
 
   const r = useMemo(() => {
-    return { ...routers, routes: checkRoutes(user.role, routers.routes) };
-  }, [routers, user.role]);
+    return createHashRouter(checkRoutes(user.role, baseRoutes));
+  }, [user.role]);
 
   return r;
 };

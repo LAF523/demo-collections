@@ -60,7 +60,7 @@ const usePernissionMenu = routes => {
 
   const m = useMemo(() => {
     return checkMenu(user.role, routes);
-  }, [user.role, routes]);
+  }, [user.role]);
 
   return m;
 };

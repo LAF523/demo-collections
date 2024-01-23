@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { login, queryUser } from '@/service/login';
+import { useNavigate } from 'react-router-dom';
 import { setTokenInLocal, setRefreshTokenInLocal, setRoleInLocal } from '@/common/locallstorage';
 import { encryptParam } from '@/common/encrypt.ts';
 import { useDispatch } from 'react-redux';
@@ -17,6 +18,7 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const queryUserInfo = async () => {
@@ -38,6 +40,7 @@ const Login: React.FC = () => {
     setRefreshTokenInLocal(data.refreshToken);
     localStorage.setItem('user', values.username);
     await queryUserInfo();
+    navigate('/main');
   };
 
   return (

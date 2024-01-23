@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import routes from '@/routes/menuRoutes';
 import usePernissionMenu from '@/hooks/usePernissionMenu';
 import logout from '@/common/logout';
 import RouterBeforeEach from '@/components/routerBeforeEach';
+import { isLogin } from '@/common';
 const { Header, Sider, Content } = Layout;
 
 const Baselayout: React.FC = () => {
   console.log('baseLayout');
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
   const menu = usePernissionMenu(routes);
+
   const menuClick = ({ key }: { key: string }) => {
     navigate(key);
   };
+
+  useEffect(() => {
+    if (!isLogin()) {
+      navigate('/login');
+    }
+  }, [location.pathname]);
 
   return (
     <Layout style={{ height: '100%' }}>
@@ -31,7 +40,6 @@ const Baselayout: React.FC = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['主页']}
           items={menu}
           onClick={menuClick}
         />
@@ -66,4 +74,4 @@ const Baselayout: React.FC = () => {
   );
 };
 
-export default RouterBeforeEach(Baselayout);
+export default Baselayout;

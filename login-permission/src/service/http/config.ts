@@ -1,4 +1,5 @@
 import logout from '@/common/logout';
+
 interface ErrMap {
   [key: string]: { msg: string; afterErr?: () => void };
 }

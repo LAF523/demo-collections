@@ -8,6 +8,7 @@ interface watingQueueTyp {
 
 let isRefreshTokening = false;
 const watingQueue: watingQueueTyp[] = [];
+
 const { baseURL, useTokenAuthorization, timeout, withCredentials } = serviceConfig;
 const service = axios.create({
   baseURL,

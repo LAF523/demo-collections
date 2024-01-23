@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
 import TransferList from '@/components/transferList';
-import { getAllAuth, getRole, getRoleAuth, getUserRoles } from '@/service/userManage';
+import { getAllAuth, getRole, getRoleAuth } from '@/service/userManage';
 import styles from './index.module.less';
 interface DataType {
   key: string;
@@ -10,7 +10,6 @@ interface DataType {
 }
 
 const Role: React.FC = () => {
-  console.log(Table);
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
