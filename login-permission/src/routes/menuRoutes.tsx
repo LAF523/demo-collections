@@ -5,6 +5,7 @@ import { VideoCameraOutlined } from '@ant-design/icons';
 const Main = LazyLoading(lazy(() => import('@/pages/main')));
 const User = LazyLoading(lazy(() => import('@/pages/user')));
 const Role = LazyLoading(lazy(() => import('@/pages/role')));
+const SQL = LazyLoading(lazy(() => import('@/pages/sql')));
 
 // 路由和侧边栏菜单由此生成
 const routeMenuMap = [
@@ -17,6 +18,12 @@ const routeMenuMap = [
         icon: <VideoCameraOutlined />,
         path: '/main',
         element: Main
+      },
+      {
+        name: 'SQL',
+        icon: <VideoCameraOutlined />,
+        path: '/SQL',
+        element: SQL
       }
     ]
   },
