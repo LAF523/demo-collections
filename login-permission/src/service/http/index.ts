@@ -10,21 +10,23 @@ import { getQueryString, cleanRes } from './httpTools.ts';
  * @return {*}
  * @since: 2024-01-08 15:33:35
  */
-export const get = (url: string, query?: object | undefined) => {
+export const get = (url: string, query?: object | undefined, other = {}) => {
   return cleanRes(
     service({
       url: url + getQueryString(query),
-      method: 'get'
+      method: 'get',
+      ...other
     })
   );
 };
 
-export const post = (url: string, data: object) => {
+export const post = (url: string, data: object, other = {}) => {
   return cleanRes(
     service({
       url: url,
       method: 'post',
-      data
+      data,
+      ...other
     })
   );
 };
