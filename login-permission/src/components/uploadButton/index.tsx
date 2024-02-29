@@ -4,8 +4,9 @@ import { Button, Upload, message } from 'antd';
 import type { UploadFile, UploadProps } from 'antd';
 import { getUploadDetial, upload, merge } from '@/service/upload.ts';
 import SparkMD5 from 'spark-md5';
-import { paralleTask } from '@/common/index.ts';
+import { paralleTask, CallBackprops } from '@/common/index.ts';
 
+const errTasks: (() => Promise<any>)[] | [] = [];
 const UploadButton: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -25,7 +26,6 @@ const UploadButton: React.FC = () => {
   };
 
   const handleUpload = async () => {
-    console.time('jishi:');
     setUploading(true);
     const { md5, suffix } = await getIdentityAndName(fileList[0]);
 
@@ -41,11 +41,32 @@ const UploadButton: React.FC = () => {
     const size = getChunkSize(file.size as number);
     const chunks = getChunks(file, size, md5, suffix, list);
     const tasks = packageTasks(chunks);
-    await paralleTask(tasks, 4);
-    await merge({ md5, suffix });
+    await paralleTask(tasks, 4, callBack);
+    await retry(2);
+    const [_, mergeError] = await merge({ md5, suffix });
+    if (mergeError) {
+      message.success(mergeError);
+    } else {
+      message.success('上传成功');
+    }
     setUploading(false);
-    console.timeEnd('jishi:');
   };
+
+  function callBack({ res, task }: CallBackprops) {
+    const err = res[1];
+    if (err) {
+      errTasks.push(task);
+    }
+  }
+  async function retry(maxRetry: number) {
+    let currRetry = 1;
+    while (errTasks.length > 0 && currRetry < maxRetry) {
+      console.log('c重试`1111111111111111111111111');
+      const len = errTasks.length;
+      await paralleTask(errTasks.splice(0, len), 4, callBack);
+      currRetry++;
+    }
+  }
 
   function getIdentityAndName(file: any): { md5: string; suffix: string } {
     return new Promise((resolve, reject) => {
@@ -60,10 +81,8 @@ const UploadButton: React.FC = () => {
         const md5 = spark.end();
         resolve({ md5, suffix });
       };
-      fileReader.onerror = () => {
-        fileReader.onerror = function (error) {
-          reject(error);
-        };
+      fileReader.onerror = error => {
+        reject(error);
       };
     });
   }
