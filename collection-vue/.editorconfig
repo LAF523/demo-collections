@@ -1,0 +1,46 @@
+# 官网: https://EditorConfig.org
+# gitHub: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+
+# top-most EditorConfig file
+# 表示是最顶层的配置文件，设为 true 时，停止向上查找
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+
+# 通用配置 -----------
+
+# 缩进方式
+indent_style = space
+# 设置换行符，值为 lf(换行)、cr(回车) 和 crlf(回车换行)
+end_of_line = lf
+# 编码格式
+charset = utf-8
+# 是否删除行尾空格
+trim_trailing_whitespace = true
+# 缩进大小
+indent_size = 2
+# 行最大长度
+max_line_length = off
+
+# 匹配文件配置,将覆盖同名通用配置
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{js}]
+charset = utf-8
+
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = space
+
+# Indentation override for all JS under lib directory
+[lib/**.js]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2

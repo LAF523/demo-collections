@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+/* 修改滚动条颜色和宽度 必须的样式 */
+::-webkit-scrollbar {
+  width: 5px; /* 纵向滚动条宽度 */
+  height: 5px; /* 横向滚动条高度 */
+  border-radius: 2px;
+}
+
+/* 滑块样式 */
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border: 2px solid #e4e4e7;
+}

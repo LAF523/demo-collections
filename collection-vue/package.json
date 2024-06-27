@@ -1,0 +1,82 @@
+{
+  "name": "imooc-front",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode development",
+    "build": "vue-tsc && vite build --mode production",
+    "preview": "vite preview",
+    "lint:script": "eslint --ext .ts,.vue --ignore-path .gitignore --fix src",
+    "lint:style": "stylelint \"src/**/*.(less|css)\" --fix",
+    "commit": "npx git-cz",
+    "prepare": "cd .. && husky install collection-vue/.husky"
+  },
+  "dependencies": {
+    "@vueuse/core": "^10.10.1",
+    "axios": "^1.7.2",
+    "element-plus": "^2.7.4",
+    "lodash-es": "^4.17.21",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "ramda": "^0.30.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/cz-commitlint": "^19.2.0",
+    "@types/node": "^20.12.12",
+    "@types/ramda": "^0.30.0",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
+    "@vitejs/plugin-legacy": "^5.4.1",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.19",
+    "commitizen": "^4.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-vue": "^9.26.0",
+    "husky": "^7.0.1",
+    "less": "^4.2.0",
+    "lint-staged": "^15.2.0",
+    "postcss": "^8.4.38",
+    "postcss-html": "^1.7.0",
+    "postcss-less": "^6.0.0",
+    "prettier": "^3.3.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "stylelint": "^16.6.1",
+    "stylelint-config-recommended-less": "^3.0.1",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-vue": "^1.0.0",
+    "stylelint-less": "^3.0.1",
+    "stylelint-order": "^6.0.4",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.2.2",
+    "unplugin-auto-import": "^0.17.6",
+    "unplugin-vue-components": "^0.27.0",
+    "vite": "^5.2.0",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vue-tsc": "^2.0.6"
+  },
+  "lint-staged": {
+    "src/**/*.{css,less}": [
+      "prettier --write --parser css"
+    ],
+    "src/**/*.{ts,tsx,js,jsx,vue}": [
+      "npm run lint:script",
+      "prettier --write"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  }
+}
