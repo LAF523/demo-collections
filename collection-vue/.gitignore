@@ -13,6 +13,8 @@ dist-ssr
 *.local
 coverage
 stats.html
+# 正式开发打开下面注释
+*.local
 
 # Editor directories and files
 .vscode/*

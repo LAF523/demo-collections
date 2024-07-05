@@ -108,14 +108,12 @@ function setItemsPos(itmesEl: HTMLDivElement[]) {
   setContainerHeight();
 }
 function computeItemsPos(item: HTMLDivElement) {
-  if (isHasDonetag(item)) {
-    return;
-  }
-  addDoneTag(item);
   const { targetCol, targetHeight } = getMinOrMaxCol(colHeightMap.value, 'min');
-  item.style.top = `${targetHeight}px`;
-  item.style.left = `${getItemLeft(targetCol)}px`;
-
+  if (!isHasDonetag(item)) {
+    item.style.top = `${targetHeight}px`;
+    item.style.left = `${getItemLeft(targetCol)}px`;
+    addDoneTag(item);
+  }
   restItemsHeightMap(targetCol, item.offsetHeight);
 }
 
@@ -148,7 +146,7 @@ function waitAllImageLoad(itemEls: HTMLDivElement[]) {
       }
       const imgEl = item.querySelector('img')!;
       const imageObj = new Image();
-      imageObj.src = imgEl.src;
+      imageObj.src = imgEl?.src;
       imageObj.onload = () => {
         resolve(0);
       };
@@ -187,6 +185,7 @@ watch(
   () => {
     nextTick(() => {
       initColWidth();
+      initColHeightMap();
       beginLoad();
     });
   },

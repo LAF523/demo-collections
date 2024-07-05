@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { handleNetErr, handleAuthError, handleRequestHeader, handleAuth } from './httpTools';
+import { handleNetErr, handleAuthError, handleRequestHeader, handleAuth, getToken } from './httpTools';
 import { serviceConfig } from './config.ts';
 
-const { baseURL, useTokenAuthorization, timeout, withCredentials } = serviceConfig;
+const { baseURL, timeout, withCredentials } = serviceConfig;
 const service = axios.create({
   baseURL,
   timeout,
@@ -12,10 +12,11 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   // 其他调整
   config = handleRequestHeader(config, {});
-  if (useTokenAuthorization) {
+  if (getToken()) {
     // 添加token
     config = handleAuth(config);
   }
+  config.headers.icode = 'helloqianduanxunlianying';
 
   return config;
 });

@@ -3,6 +3,9 @@
 
 import { App } from 'vue';
 
+export { confirm } from './confirm/index.ts';
+export { message } from './message/index.ts';
+
 export default {
   // 自动注册组件
   install(app: App<Element>) {

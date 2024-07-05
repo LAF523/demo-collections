@@ -2,13 +2,19 @@ import { ElMessage } from 'element-plus';
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { netWorkErrMap, authErrMap } from './config.ts';
 
+export function getToken() {
+  const user = localStorage.getItem('user');
+  if (user !== null) {
+    return JSON.parse(user).state.token;
+  }
+}
 // 添加其他配置
 export const handleRequestHeader = (config: InternalAxiosRequestConfig<any>, otherConfig: object) => {
   return { ...config, ...otherConfig };
 };
 // 添加token
 export const handleAuth = (config: InternalAxiosRequestConfig<any>) => {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   config.headers.Authorization = token ? 'Bearer ' + token : '';
   return config;
 };
@@ -19,7 +25,7 @@ export const handleNetErr = (error: { response: { status: string } }) => {
   const { msg, afterErr } = netWorkErrMap[status] || { msg: '未知网络错误' };
   // 显示错误
   if (msg) {
-    ElMessage.error({ content: msg, duration: 2 });
+    ElMessage.error(msg);
   }
   if (afterErr) {
     afterErr();
@@ -30,7 +36,7 @@ export const handleAuthError = (res: AxiosResponse<any>) => {
   const { code } = res.data;
   const { msg, afterErr } = authErrMap[code] || {};
   if (msg) {
-    ElMessage.error({ content: msg, duration: 2 });
+    ElMessage.error(msg);
   }
   if (afterErr) {
     afterErr();

@@ -10,7 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-# *.local 正是开发需要打开注释
+# 正式开发打开下面注释
+*.local
 
 # Editor directories and files
 # .vscode/*

@@ -30,16 +30,20 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: ['@typescript-eslint', 'vue'],
+  globals: {
+    // 全局变量
+    QC: 'readonly'
+  },
   rules: {
     'prettier/prettier': 'error',
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
-    'no-unused-vars': 'error',
     'no-debugger': 2,
     'no-console': 2,
     'no-alert': 2,
     'no-dupe-keys': 2,
     'no-dupe-args': 2,
+    'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
     'no-use-before-define': [2, { functions: false }],
     '@typescript-eslint/no-explicit-any': ['off'],
     'react/prop-types': 'off', // 使用ts的参数类型检查

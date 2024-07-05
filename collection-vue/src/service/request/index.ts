@@ -21,5 +21,14 @@ export const post = (url: string, data: object, other = {}) => {
     })
   );
 };
-
+export const put = (url: string, data: any, other = {}) => {
+  return cleanRes(
+    service({
+      url,
+      method: 'put',
+      data,
+      ...other
+    })
+  );
+};
 // TODO: 其他方法同post

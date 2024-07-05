@@ -1,5 +1,6 @@
 <template>
   <Mpopover
+    v-if="userStore.state.token"
     trigger="hover"
     direction="leftBottom"
     class="flex items-center"
@@ -31,6 +32,7 @@
         v-for="item in myContent"
         :key="item.name"
         class="flex items-center justify-start hover:bg-zinc-100/60 dark:hover:bg-zinc-800 rounded"
+        @click="item.click"
       >
         <MsvgIcon
           :name="item.icon"
@@ -41,12 +43,37 @@
       </li>
     </ul>
   </Mpopover>
+  <div v-else>
+    <Mbutton
+      class="guide-my"
+      icon="profile"
+      iconColor="#fff"
+      @click="onToLogin"
+    ></Mbutton>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/stores/modules/user/index.ts';
+import { confirm } from '@/libs/index.ts';
+
+const userStore = useUserStore();
+const { logout } = userStore;
+const router = useRouter();
 const myContent = [
-  { id: 1, name: '个人资料', icon: 'profile', path: '/profile  ' },
-  { id: 2, name: '升级vip', icon: 'vip-profile', path: '/member' },
-  { id: 3, name: '退出登录', icon: 'logout', path: '/' }
+  { id: 1, name: '个人资料', icon: 'profile', path: '/profile  ', click: () => router.push('./profile') },
+  { id: 2, name: '升级vip', icon: 'vip-profile', path: '/member', click: () => router.push('./member') },
+  { id: 3, name: '退出登录', icon: 'logout', path: '/', click: uselogout }
 ];
+const onToLogin = () => {
+  router.push('/login');
+};
+
+function uselogout() {
+  confirm({
+    title: '确认',
+    content: '确认退出登录吗?',
+    onConfirm: () => logout()
+  });
+}
 </script>

@@ -9,7 +9,7 @@
       color="#707070"
     ></MsvgIcon>
     <input
-      v-model="inputVal"
+      v-model="model"
       v-bind="$attrs"
       @focus="handleFocus"
       class="dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 dark:group-hover:bg-zinc-900 dark:group-hover:border-zinc-700 block w-full h-[44px] pl-4 text-sm outline-0 bg-zinc-100 caret-zinc-400 rounded-xl text-zinc-900 tracking-wide font-semibold border border-zinc-100 duration-500 group-hover:bg-white group-hover:border-zinc-200 focus:border-red-300"
@@ -32,7 +32,7 @@
       <div
         v-if="slots.dropDown"
         v-show="isFocus"
-        class="dark:bg-zinc-800 dark:border-zinc-600 max-h-[368px] p-2 border border-zinc-200 overflow-auto text-base z-20 absolute left-0 -bottom-8 w-full rounded-sm bg-white hover:shadow-2xl"
+        class="dark:bg-zinc-800 dark:border-zinc-600 max-h-[368px] p-2 border border-zinc-200 overflow-auto text-base z-20 absolute left-0 top-[120%] w-full rounded-sm bg-white hover:shadow-2xl"
       >
         <slot name="dropDown"></slot>
       </div>
@@ -42,29 +42,29 @@
 
 <script setup lang="ts">
 const slots = useSlots();
-const inputVal = defineModel<string, 'trim'>('inputVal');
+const model = defineModel<string, 'trim'>();
 const props = withDefaults(
   defineProps<{
     showClear?: boolean;
   }>(),
   {
-    showClear: () => true
+    showClear: true
   }
 );
-const emit = defineEmits(['search', 'clear', 'focus']);
+const emit = defineEmits(['search', 'clear', 'focus', 'change']);
 
 const isShowClear = computed(() => {
-  return props.showClear && !!inputVal.value?.length;
+  return props.showClear && !!model.value?.length;
 });
 const handleClear = () => {
-  inputVal.value = '';
+  model.value = '';
   emit('clear');
 };
 
 const isFocus = ref<boolean>(false);
 const handleFocus = () => {
   isFocus.value = true;
-  emit('focus', inputVal.value);
+  emit('focus', model.value);
 };
 const dropDownRef = ref();
 onClickOutside(dropDownRef, () => {
@@ -72,8 +72,12 @@ onClickOutside(dropDownRef, () => {
 });
 
 const handleSearch = () => {
-  emit('search', inputVal.value);
+  emit('search', model.value);
 };
+
+watch(model, () => {
+  emit('change', model.value);
+});
 </script>
 
 <style scoped lang="less">

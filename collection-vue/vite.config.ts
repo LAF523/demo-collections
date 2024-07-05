@@ -129,6 +129,7 @@ export default defineConfig(conditionalConfig => {
       hmr: true,
       proxy: {
         '/api': {
+          target: env.VITE_SERVE,
           changeOrigin: true
         }, // api代理路径
         '/mock': '' // mock代理路径,

@@ -2,7 +2,6 @@
   <div class="bg-white sticky top-0 left-0 z-10 flex dark:bg-zinc-900">
     <ul
       class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden"
-      @click="handleMenuClick"
       ref="menuWrapRef"
     >
       <li
@@ -13,6 +12,7 @@
         :data-index="index"
         :class="{ 'text-zinc-50': currentIdx === index }"
         :ref="getNavigationItem"
+        @click="handleMenuClick(index)"
       >
         {{ item.name }}
       </li>
@@ -37,8 +37,10 @@
 <script setup lang="ts">
 import { useCategorysStore } from '@/stores/modules/categorys/index.ts';
 import Menu from '../menu/index.vue';
+import { useAppStore } from '@/stores/modules/app';
 
 const { categorysState } = useCategorysStore();
+const { setCurrCategory } = useAppStore();
 const sliderStyle = ref<{ transform: string; width: string }>({
   transform: 'translateX(0)',
   width: '1.25rem'
@@ -61,19 +63,13 @@ const moveSlider = (sliderLeft: number, sliderWidth: number) => {
     width: `${sliderWidth}px`
   };
 };
-const handleMenuClick = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  const { menuitem: isMenuItem, index } = target.dataset;
-  if (!isMenuItem) {
-    return;
-  }
-  currentIdx.value = Number(index);
-  const { left, width } = target.getBoundingClientRect();
-  moveSlider(left, width);
+const handleMenuClick = (index: number) => {
+  currentIdx.value = index;
 };
 watch(currentIdx, idx => {
   const { left, width } = navigationItems[idx].getBoundingClientRect();
   moveSlider(left, width);
+  setCurrCategory(categorysState.value[idx]);
 });
 
 const isShow = ref<boolean>(false);

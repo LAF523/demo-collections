@@ -5,7 +5,7 @@
       :class="[isOpen ? 'h-[206px]' : 'h-[56px]']"
     >
       <li
-        @click="hanleClick(index)"
+        @click="hanleClick(index, item)"
         v-for="(item, index) of categorysState"
         :key="item.name"
         class="dark:text-zinc-500 dark:hover:text-zinc-300 shrink-0 px-1.5 py-0 z-10 duration-200 last:mr-4 text-zinc-900 text-base font-bold h-4 leading-4 cursor-pointer hover:bg-zinc-200 rounded mr-1 mb-1 dark:hover:bg-zinc-900"
@@ -29,12 +29,16 @@
 
 <script setup lang="ts">
 import { useCategorysStore } from '@/stores/modules/categorys';
+import { useAppStore } from '@/stores/modules/app';
+import { categoryType } from '@/stores/modules/categorys/type.ts';
 
 const { categorysState } = useCategorysStore();
+const { setCurrCategory } = useAppStore();
 const currIdx = ref<number>(0);
 const isOpen = ref(false);
 
-const hanleClick = (index: number) => {
+const hanleClick = (index: number, item: categoryType) => {
+  setCurrCategory(item);
   currIdx.value = index;
 };
 

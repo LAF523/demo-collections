@@ -23,9 +23,9 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from '@vueuse/core';
 
-const isLoading = defineModel<boolean>();
 const props = defineProps<{
   isFinished: boolean;
+  isLoading: boolean;
 }>();
 const emits = defineEmits(['load']);
 
@@ -37,14 +37,14 @@ useIntersectionObserver(signRef, ([{ isIntersecting }]) => {
 });
 
 function emitLoad() {
-  const needLoad = isInViewPort.value && !props.isFinished && !isLoading.value;
+  const needLoad = isInViewPort.value && !props.isFinished && !props.isLoading;
   if (needLoad) {
     emits('load');
   }
 }
 
 watch(
-  () => isLoading.value,
+  () => props.isLoading,
   () => {
     setTimeout(() => {
       emitLoad();

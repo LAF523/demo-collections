@@ -11,7 +11,7 @@ export const useCategorysStore = defineStore(
     const categorysState = computed(() => {
       return state;
     });
-    const setCategorysState = (categorys: any) => {
+    const setCategorysState = (categorys: categoryType[]) => {
       state.value = categorys;
     };
     const fetchCategotys = async () => {

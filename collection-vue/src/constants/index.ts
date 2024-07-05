@@ -1,5 +1,5 @@
 // 判断移动端设备的屏幕宽度阈值
-export const MOBILE_WIDTH = 950;
+export const MOBILE_WIDTH = 375;
 // 移动端navigation 补充字段
 export const ALL_CATEGORY_ITEM = {
   id: 'all',
@@ -100,3 +100,5 @@ export const INT_CATEGORYS = [
     urlname: 'travel_places'
   }
 ];
+
+export const FEEDBACK_URL = 'https://txc.qq.com/products/660090';

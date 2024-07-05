@@ -22,6 +22,8 @@
 
 <script lang="ts"></script>
 <script setup lang="ts">
+import MsvgIcon from '../svgIcon/index.vue';
+
 /* 通用button
 参数:
   icon: icon按钮,文字按钮

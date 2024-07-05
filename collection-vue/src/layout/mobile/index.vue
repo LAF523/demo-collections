@@ -1,10 +1,14 @@
 <template>
   <div>
-    <MobileBar />
-    <routerView></routerView>
+    <MtransitionRouterView
+      :transitionName="appState.routerChangeType"
+      rootName="Home"
+    ></MtransitionRouterView>
   </div>
 </template>
 
 <script setup lang="ts">
-import MobileBar from './components/mobileNav/index.vue';
+import { useAppStore } from '@/stores/modules/app';
+
+const { appState } = useAppStore();
 </script>
