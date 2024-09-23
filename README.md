@@ -9,3 +9,4 @@
 - 大文件分片上传(react)
 - 瀑布流 (react+vue)
 - 长列表 (react+vue)
+- 拖拽排序 (react)

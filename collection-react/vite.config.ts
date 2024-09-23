@@ -49,8 +49,8 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: env.VITE_SERVE,
-          changeOrigin: true
-          // rewrite: path => path.replace(/^\/api/, '')
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, '')
         }, // api代理路径
         '/mock': '' // mock代理路径,
       }

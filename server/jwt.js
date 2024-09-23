@@ -26,7 +26,7 @@ function generateReFreshToken(user) {
 
 // 一个中间件,校验token时间
 function authenticateToken(req, res, next) {
-  if (["/publicKey", "/login"].includes(req.url)) {
+  if (["/publicKey", "/login", "/refreshToken"].includes(req.url)) {
     // 登录不校验token
     return next();
   }

@@ -7,6 +7,7 @@ const User = LazyLoading(lazy(() => import('@/pages/user')));
 const Role = LazyLoading(lazy(() => import('@/pages/role')));
 const File = LazyLoading(lazy(() => import('@/pages/file')));
 const Collection = LazyLoading(lazy(() => import('@/pages/waterfallPage')));
+const DragPage = LazyLoading(lazy(() => import('@/pages/dragPage')));
 
 // 路由和侧边栏菜单由此生成
 const routeMenuMap = [
@@ -55,8 +56,14 @@ const routeMenuMap = [
       {
         name: '瀑布流',
         icon: <VideoCameraOutlined />,
-        path: '/collection',
+        path: '/collection/water',
         element: Collection
+      },
+      {
+        name: '拖拽排序',
+        icon: <VideoCameraOutlined />,
+        path: '/collection/drag',
+        element: DragPage
       }
     ]
   }
