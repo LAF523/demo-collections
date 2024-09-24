@@ -199,7 +199,6 @@ class FlipDOM {
     }
     this.playing = true;
     this.firstPos = this.lastPos;
-    this.dom.getAnimations().forEach(animation => animation.cancel());
     this.dom.animate(
       [
         {
@@ -211,12 +210,14 @@ class FlipDOM {
           transform: `none`
         }
       ],
-      { duration: this.duration }
+      { duration: this.duration, fill: 'forwards' }
     );
-      // 动画执行完毕再打开开关
-    setTimeout(() => {
+    
+      // 本次动画完成播放之后,才允许下次动画执行
+    animation.finished.then(() => {
       this.playing = false;
-    }, this.duration);
+      animation.cancel();
+    });
   }
 }
 export { FlipDOM };

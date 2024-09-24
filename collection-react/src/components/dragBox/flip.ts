@@ -42,8 +42,7 @@ class FlipDOM {
     }
     this.playing = true;
     this.firstPos = this.lastPos;
-    this.dom.getAnimations().forEach(animation => animation.cancel());
-    this.dom.animate(
+    const animation = this.dom.animate(
       [
         {
           transformOrigin: 'top left',
@@ -54,11 +53,12 @@ class FlipDOM {
           transform: `none`
         }
       ],
-      { duration: this.duration }
+      { duration: this.duration, fill: 'forwards' }
     );
-    setTimeout(() => {
+    animation.finished.then(() => {
       this.playing = false;
-    }, this.duration);
+      animation.cancel();
+    });
   }
 }
 
